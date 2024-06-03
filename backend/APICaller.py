@@ -33,23 +33,8 @@ def get_characters():
     try:
         response = requests.get(base_url, params=params)
         response.raise_for_status()  # Raises an HTTPError for bad responses
-        return response.json()
+        return response.json().get('data', {}).get('results', [])
     except requests.exceptions.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
     except Exception as err:
         print(f"Other error occurred: {err}")
-
-characters = get_characters()
-if characters:
-    # Process characters
-    pass
-
-
-# Fetch and print the characters
-characters = get_characters()
-
-with open("sample.json", 'w') as f:
-    json.dump(characters, f, indent=4)
-
-
-# pprint.pprint(characters)
